@@ -1,0 +1,64 @@
+x-deploy-policy: &x-deploy-policy
+  update_config:
+    parallelism: 1
+    delay: 30s
+    order: stop-first
+    failure_action: rollback
+  rollback_config:
+    parallelism: 1
+    delay: 30s
+  restart_policy:
+    condition: on-failure
+    delay: 30s
+    max_attempts: 3
+    window: 120s
+
+x-default-logging: &x-default-logging
+  options:
+    max-size: "12m"
+    max-file: "5"
+  driver: json-file
+
+configs:
+  loki-config:
+    name: loki-config-v1.0.yaml
+    file: configs/loki.yaml
+
+services:
+  loki:
+    image: grafana/loki:2.9.1
+    env_file: .env
+    command: 
+      - -config.expand-env=true
+      - -config.file=/etc/loki/custom.yaml
+    networks:
+      - docker_metrics
+    ports:
+      - 3100:3100 # http
+      # - 9096:9096 # grpc
+      # - 7946:7946 # gossip
+    volumes:
+      - loki:/loki
+    configs:
+      - source: loki-config
+        target: /etc/loki/custom.yaml
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy: 
+      <<: *x-deploy-policy
+      replicas: 3
+      labels:
+        io.prometheus.job: "loki"
+    logging: *x-default-logging
+
+volumes:
+  loki:
+    name: loki-{{.Task.Slot}}
+
+networks:
+  docker_metrics:
+    name: docker_metrics
+    external: true
