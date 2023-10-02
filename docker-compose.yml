@@ -32,7 +32,7 @@ services:
       - -config.expand-env=true
       - -config.file=/etc/loki/custom.yaml
     networks:
-      - docker_metrics
+      - dockerswarm_monitoring
     ports:
       - 3100:3100 # http
       # - 9096:9096 # grpc
@@ -59,6 +59,6 @@ volumes:
     name: loki-{{.Task.Slot}}
 
 networks:
-  docker_metrics:
-    name: docker_metrics
+  dockerswarm_monitoring:
+    name: dockerswarm_monitoring
     external: true
