@@ -30,8 +30,8 @@ common:
       prefix: loki/collectors/
       store: consul
       consul:
-        host: ${CONSUL_HTTP_ADDR:-consul:8500}
-        acl_token: ${CONSUL_ACL_TOKEN:-}
+        host: consul:8500
+        acl_token: secret
 
 schema_config:
   configs:
@@ -45,19 +45,23 @@ schema_config:
 
 storage_config:
   aws:
-    s3: ${S3_ENDPOINT_URL:-http://minio:9000}
-    region: ${S3_REGION:-us-east-1}
-    bucketnames: ${S3_BUCKET_NAME:-loki}
-    access_key_id: ${S3_ACCESS_KEY_ID}
-    secret_access_key: ${S3_SECRET_ACCESS_KEY}
-    insecure: ${S3_INSECURE:-true}
-    sse_encryption: ${S3_SSE_ENCRYPTION:-false}
-    s3forcepathstyle: ${S3_FORCE_PATH_STYLE:-true}
+    s3: http://minio:9000
+    region: us-east-1
+    bucketnames: loki
+    access_key_id: access_key_id
+    secret_access_key: secret_access_key
+    insecure: true
+    sse_encryption: false
+    s3forcepathstyle: true
+
   boltdb_shipper:
     active_index_directory: /loki/index
     cache_location: /loki/boltdb-cache
     cache_ttl: 24h
     shared_store: s3
+
+ruler:
+  alertmanager_url: http://alertmanager:9093
 
 querier:
   # max_concurrent: 10 # default
@@ -76,8 +80,6 @@ ingester_client:
     max_recv_msg_size: 104857600
     max_send_msg_size: 104857600
 
-ruler:
-  alertmanager_url: http://alertmanager:9093
 
 limits_config:
   enforce_metric_name: false
