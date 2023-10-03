@@ -1,10 +1,13 @@
 docker_stack_name = loki
 
 it:
-	@echo "make [deploy|destroy]"
+	@echo "make [configs|deploy|destroy]"
 
-deploy:
+.PHONY: configs
+configs:
 	test -f "configs/loki.yaml" || cp configs/loki.base.yaml configs/loki.yaml
+
+deploy: configs
 	docker stack deploy -c docker-compose.yml $(docker_stack_name)
 
 destroy:
