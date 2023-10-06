@@ -27,7 +27,9 @@ configs:
 services:
   loki:
     image: grafana/loki:2.9.1
-    command: -config.expand-env=true
+    command: 
+      - -config.expand-env=true
+      - -config.file=/etc/loki/custom.yaml
     networks:
       - dockerswarm_monitoring
     ports:
