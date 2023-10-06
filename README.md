@@ -37,6 +37,20 @@ ruler:
 
 And add any additional configuration you need to `configs/loki.yaml`.
 
+### Object Storage buckets
+
+You need to create the following buckets in your object storage:
+- `loki`
+
+You can change the bucket names in the `configs/loki.yaml` file. Look for the `bucketnames` property.
+
+**Example**
+```yaml
+storage_config:
+  aws:
+    bucketnames: loki  # Change this to your bucket name
+```
+
 ## Deployment
 
 To deploy the stack, run the following command:
