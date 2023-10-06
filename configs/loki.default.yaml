@@ -30,21 +30,15 @@ common:
       prefix: loki/collectors/
       store: consul
       consul:
+        # !!! IMPORTANT !!!
+        # ! Update this to the IP address of your Consul server
         host: consul:8500
         acl_token: secret
 
-schema_config:
-  configs:
-    - from: 2023-01-01
-      store: boltdb-shipper
-      object_store: aws
-      schema: v12
-      index:
-        prefix: index_
-        period: 24h
-
 storage_config:
   aws:
+    # !!! IMPORTANT !!!
+    # ! Update this to the IP address of your Minio server or S3 endpoint
     s3: http://minio:9000
     region: us-east-1
     bucketnames: loki
@@ -60,8 +54,20 @@ storage_config:
     cache_ttl: 24h
     shared_store: s3
 
+# You can also change the to a different alertmanager instance here.
+# Its default value is http://alertmanager:9093 which is the default in cluster deployment.
 ruler:
   alertmanager_url: http://alertmanager:9093
+
+schema_config:
+  configs:
+    - from: 2023-01-01
+      store: boltdb-shipper
+      object_store: aws
+      schema: v12
+      index:
+        prefix: index_
+        period: 24h
 
 querier:
   # max_concurrent: 10 # default
@@ -90,9 +96,9 @@ limits_config:
   # The minimum retention period is 24h.
   # retention_period: 744h
 
-memberlist:
-  join_members:
-    - dns+loki:7946
+# memberlist:
+#   join_members:
+#     - dns+loki:7946
 
 # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
 # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
