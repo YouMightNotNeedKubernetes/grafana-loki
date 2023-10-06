@@ -1,4 +1,4 @@
-# loki
+# Grafana Loki
 A high-availability Grafana Loki deployment for Docker Swarm
 
 ## Getting Started
