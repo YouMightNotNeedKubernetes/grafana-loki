@@ -55,7 +55,7 @@ services:
 
 volumes:
   loki:
-    name: loki-{{.Task.Slot}}
+    external: true
 
 networks:
   dockerswarm_monitoring:
