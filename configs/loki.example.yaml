@@ -32,18 +32,18 @@ common:
       consul:
         # !!! IMPORTANT !!!
         # ! Update this to the IP address of your Consul server
-        host: host.docker.internal:8500
-        # acl_token: secret
+        host: consul:8500
+        acl_token: secret
 
 storage_config:
   aws:
     # !!! IMPORTANT !!!
     # ! Update this to the IP address of your Minio server or S3 endpoint
-    s3: http://host.docker.internal:9000
+    s3: http://minio:9000
     region: us-east-1
     bucketnames: loki
-    access_key_id: minioadmin
-    secret_access_key: minioadmin
+    access_key_id: access_key_id
+    secret_access_key: secret_access_key
     insecure: true
     sse_encryption: false
     s3forcepathstyle: true
