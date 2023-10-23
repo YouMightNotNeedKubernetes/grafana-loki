@@ -57,7 +57,11 @@ storage_config:
 # You can also change the to a different alertmanager instance here.
 # Its default value is http://alertmanager:9093 which is the default in cluster deployment.
 ruler:
-  alertmanager_url: http://alertmanager:9093
+  alertmanager_url: dns+http://tasks.alertmanager:9093
+  enable_alertmanager_discovery: true
+  enable_alertmanager_v2: true
+  enable_api: true
+  enable_sharding: true
 
 schema_config:
   configs:
