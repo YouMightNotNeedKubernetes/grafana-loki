@@ -41,7 +41,7 @@ configs:
 
 services:
   loki:
-    image: grafana/loki:2.9.1
+    image: grafana/loki:${GRAFANA_LOKI_VERSION:-latest}
     command: 
       - -config.expand-env=true
       - -config.file=/etc/loki/loki.yaml
