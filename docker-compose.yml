@@ -48,7 +48,7 @@ services:
     networks:
       - dockerswarm_monitoring
     ports:
-      - 3100:3100 # http
+      - ${GRAFANA_LOKI_PORT:-3100}:3100 # http
       # - 9096:9096 # grpc
       # - 7946:7946 # gossip
     volumes:
