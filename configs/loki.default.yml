@@ -39,6 +39,30 @@ common:
       sse_encryption: false
       s3forcepathstyle: true
 
+# You can also change the to a different alertmanager instance here.
+# Its default value is http://alertmanager:9093 which is the default in cluster deployment.
+# ruler:
+#   enable_api: true
+#   enable_sharding: true
+#   wal:
+#     dir: /loki/ruler-wal
+
+#   # Alertmanager
+#   alertmanager_url: dns+http://tasks.alertmanager:9093
+#   enable_alertmanager_discovery: true
+#   enable_alertmanager_v2: true
+
+#   # Prometheus Remote Write
+#   remote_write:
+#     enabled: true
+#     clients:
+#       local:
+#          url: http://prometheus:9090/api/v1/write
+#          queue_config:
+#            # send immediately as soon as a sample is generated
+#            capacity: 1
+#            batch_send_deadline: 0s
+
 schema_config:
   configs:
   - from: 2020-08-01
@@ -71,17 +95,6 @@ ingester:
   chunk_target_size: 1.572864e+06
   chunk_block_size: 262144
   flush_op_timeout: 10s
-
-# You can also change the to a different alertmanager instance here.
-# Its default value is http://alertmanager:9093 which is the default in cluster deployment.
-ruler:
-  alertmanager_url: dns+http://tasks.alertmanager:9093
-  enable_alertmanager_discovery: true
-  enable_alertmanager_v2: true
-  enable_api: true
-  enable_sharding: true
-  wal:
-    dir: /loki/ruler-wal
 
 querier:
   # max_concurrent: 10 # default

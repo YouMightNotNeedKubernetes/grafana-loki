@@ -36,9 +36,6 @@ common:
       secret_access_key: minioadmin
       sse_encryption: false
       s3forcepathstyle: true
-
-ruler:
-  alertmanager_url: http://alertmanager:9093
 ```
 
 And add any additional configuration you need to `configs/loki.yml`.
