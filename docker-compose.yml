@@ -5,7 +5,7 @@ x-deploy: &x-deploy-default
     constraints:
       - node.labels.grafana-loki == true
     preferences:
-      - spread: node.labels.loki
+      - spread: node.labels.grafana-loki
   labels:
     io.prometheus.enable: "true"
   update_config:
