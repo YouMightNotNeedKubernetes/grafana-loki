@@ -10,39 +10,45 @@ $ docker network create --scope=swarm --driver overlay --attachable dockerswarm_
 ```
 
 We provided a base configuration file for Grafana Loki. You can find it in the `config` folder.  
-Please make a copy as `configs/loki.yaml`, make sure to change the following values:
+Please make a copy as `configs/loki.yml`, make sure to change the following values:
 
 ```yml
 common:
+  # ...
   ring:
     kvstore:
+      # ...
+      store: consul
       consul:
-        host: consul:8500
-        acl_token: secret
-
-storage_config:
-  aws:
-    s3: http://minio:9000
-    region: us-east-1
-    bucketnames: loki
-    access_key_id: access_key_id
-    secret_access_key: secret_access_key
-    insecure: true
-    sse_encryption: false
-    s3forcepathstyle: true
+        # !!! IMPORTANT !!!
+        # ! Update this to the IP address of your Consul server
+        host: 10.10.201.201:8500
+        # acl_token: secret
+  storage:
+    # !!! IMPORTANT !!!
+    # ! Update this to the IP address of your Minio server or S3 endpoint
+    s3: 
+      endpoint: http://10.10.201.201:9000
+      region: us-east-1
+      insecure: true
+      bucketnames: loki
+      access_key_id: minioadmin
+      secret_access_key: minioadmin
+      sse_encryption: false
+      s3forcepathstyle: true
 
 ruler:
   alertmanager_url: http://alertmanager:9093
 ```
 
-And add any additional configuration you need to `configs/loki.yaml`.
+And add any additional configuration you need to `configs/loki.yml`.
 
 ### Object Storage buckets
 
 You need to create the following buckets in your object storage:
 - `loki`
 
-You can change the bucket names in the `configs/loki.yaml` file. Look for the `bucketnames` property.
+You can change the bucket names in the `configs/loki.yml` file. Look for the `bucketnames` property.
 
 **Example**
 ```yaml
