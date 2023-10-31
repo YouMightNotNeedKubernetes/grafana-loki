@@ -67,5 +67,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     deploy: *x-deploy-default
     logging: *x-logging-default
