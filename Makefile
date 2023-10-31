@@ -1,4 +1,4 @@
-docker_stack_name = loki
+docker_stack_name = grafana-loki
 
 compose_files := -c docker-compose.yml
 ifneq ("$(wildcard docker-compose.override.yml)","")
