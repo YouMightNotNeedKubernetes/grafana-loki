@@ -24,7 +24,7 @@ common:
       consul:
         # !!! IMPORTANT !!!
         # ! Update this to the IP address of your Consul server
-        host: host.docker.internal:8500
+        host: consul:8500
         # acl_token: secret
   storage:
     s3:
