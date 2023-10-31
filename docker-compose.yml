@@ -29,9 +29,6 @@ x-logging: &x-logging-default
   driver: json-file
 
 networks:
-  prometheus:
-    name: prometheus
-    external: true
   dockerswarm_monitoring:
     name: dockerswarm_monitoring
     external: true
@@ -51,7 +48,6 @@ services:
       - -config.expand-env=true
       - -config.file=/etc/loki/loki.yaml
     networks:
-      - prometheus
       - dockerswarm_monitoring
     ports:
       - ${GRAFANA_LOKI_PORT:-3100}:3100 # http
