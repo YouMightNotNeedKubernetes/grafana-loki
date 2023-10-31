@@ -1,3 +1,5 @@
 docker-compose.*.yml
 configs/loki.yml
 configs/loki.*.yml
+
+dashboards/
