@@ -27,42 +27,17 @@ common:
         host: host.docker.internal:8500
         # acl_token: secret
   storage:
-    # !!! IMPORTANT !!!
-    # ! Update this to the IP address of your Minio server or S3 endpoint
     s3:
-      endpoint: minio:9000
+      # !!! IMPORTANT !!!
+      # ! Update this to the IP address of your Minio server or S3 endpoint
+      endpoint: http://minio:9000
       region: us-east-1
-      insecure: true
       bucketnames: loki
       access_key_id: minioadmin
       secret_access_key: minioadmin
+      insecure: true
       sse_encryption: false
       s3forcepathstyle: true
-
-ingester:
-  lifecycler:
-    join_after: 10s
-    observe_period: 5s
-    final_sleep: 0s
-  chunk_idle_period: 1m
-  wal:
-    enabled: true
-    dir: /loki/wal
-  max_chunk_age: 1m
-  chunk_retain_period: 30s
-  chunk_encoding: snappy
-  chunk_target_size: 1.572864e+06
-  chunk_block_size: 262144
-  flush_op_timeout: 10s
-
-# You can also change the to a different alertmanager instance here.
-# Its default value is http://alertmanager:9093 which is the default in cluster deployment.
-ruler:
-  alertmanager_url: dns+http://tasks.alertmanager:9093
-  enable_alertmanager_discovery: true
-  enable_alertmanager_v2: true
-  enable_api: true
-  enable_sharding: true
 
 schema_config:
   configs:
@@ -80,6 +55,33 @@ schema_config:
     index:
       prefix: index_
       period: 24h
+
+ingester:
+  lifecycler:
+    join_after: 10s
+    observe_period: 5s
+    final_sleep: 0s
+  chunk_idle_period: 1m
+  wal:
+    enabled: true
+    dir: /loki/ingester-wal
+  max_chunk_age: 1m
+  chunk_retain_period: 30s
+  chunk_encoding: snappy
+  chunk_target_size: 1.572864e+06
+  chunk_block_size: 262144
+  flush_op_timeout: 10s
+
+# You can also change the to a different alertmanager instance here.
+# Its default value is http://alertmanager:9093 which is the default in cluster deployment.
+ruler:
+  alertmanager_url: dns+http://tasks.alertmanager:9093
+  enable_alertmanager_discovery: true
+  enable_alertmanager_v2: true
+  enable_api: true
+  enable_sharding: true
+  wal:
+    dir: /loki/ruler-wal
 
 querier:
   # max_concurrent: 10 # default
