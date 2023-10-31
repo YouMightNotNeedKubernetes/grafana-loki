@@ -3,7 +3,7 @@ x-deploy: &x-deploy-default
   placement:
     max_replicas_per_node: 1
     constraints:
-      - node.labels.loki == true
+      - node.labels.grafana-loki == true
     preferences:
       - spread: node.labels.loki
   labels:
@@ -38,26 +38,30 @@ volumes:
     external: true
 
 configs:
-  loki-config:
-    file: configs/loki.yaml
+  loki.yml:
+    template_driver: golang
+    file: configs/loki.yml
 
 services:
   loki:
+    hostname: loki-{{.Task.Slot}}
     image: grafana/loki:${GRAFANA_LOKI_VERSION:-latest}
     command: 
       - -config.expand-env=true
-      - -config.file=/etc/loki/loki.yaml
+      - -config.file=/etc/loki/loki.yml
+    environment:
+      GRAFANA_LOKI_HTTP_LISTEN_PORT: ${GRAFANA_LOKI_HTTP_LISTEN_PORT:-3100}
+      GRAFANA_LOKI_GRPC_LISTEN_PORT: ${GRAFANA_LOKI_GRPC_LISTEN_PORT:-9096}
     networks:
       - dockerswarm_monitoring
     ports:
-      - ${GRAFANA_LOKI_PORT:-3100}:3100 # http
-      # - 9096:9096 # grpc
-      # - 7946:7946 # gossip
+      - ${GRAFANA_LOKI_HTTP_LISTEN_PORT:-3100}:3100 # http_listen_port
+      - ${GRAFANA_LOKI_GRPC_LISTEN_PORT:-9096}:9096 # grpc_listen_port
     volumes:
       - loki:/loki
     configs:
-      - source: loki-config
-        target: /etc/loki/loki.yaml
+      - source: loki.yml
+        target: /etc/loki/loki.yml
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
       interval: 10s

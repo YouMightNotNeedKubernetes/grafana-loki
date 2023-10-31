@@ -1,1 +1,3 @@
-configs/loki.yaml
+docker-compose.*.yml
+configs/loki.yml
+configs/loki.*.yml

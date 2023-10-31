@@ -10,7 +10,7 @@ it:
 
 .PHONY: configs
 configs:
-	test -f "configs/loki.yaml" || cp configs/loki.default.yaml configs/loki.yaml
+	test -f "configs/loki.yml" || cp configs/loki.default.yml configs/loki.yml
 
 deploy: configs
 	docker stack deploy $(compose_files) $(docker_stack_name)
