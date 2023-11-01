@@ -79,7 +79,7 @@ Replace: loki_build_info
 And the following:
 ```sh
 Find: level=\\"\$level\\"
-Replace: level=~"$level"
+Replace: level=~\"$level\"
 ```
 
 ## Deployment
