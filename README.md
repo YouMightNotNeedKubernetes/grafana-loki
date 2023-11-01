@@ -54,6 +54,25 @@ storage_config:
     bucketnames: loki  # Change this to your bucket name
 ```
 
+## Dashboard
+
+You can find a dashboard for Grafana Loki in the `dashboard` folder.
+
+You might find that you need to make some modifications to the dashboard to make it work with your setup.
+
+**Fix `job` label**
+
+```
+Find: job=~\\"\(?\$namespace\)?/(.+?(?:\.\*)?)\\"
+Replace: job=~\"$namespace/(loki|$1)\"
+```
+
+**Fix `container` label**
+```
+Find: container=~?\\"(compactor|distributor|index-gateway|ingester|querier|query-frontend|query-scheduler|ruler)\\"
+Replace: container=~\"(loki|$1)\"
+```
+
 ## Deployment
 
 To deploy the stack, run the following command:
