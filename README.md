@@ -60,17 +60,21 @@ You can find a dashboard for Grafana Loki in the `dashboard` folder.
 
 You might find that you need to make some modifications to the dashboard to make it work with your setup.
 
-**Fix `job` label**
-
-```
+**Fix `job` label**:
+```sh
 Find: job=~\\"\(?\$namespace\)?/(.+?(?:\.\*)?)\\"
 Replace: job=~\"$namespace/(loki|$1)\"
 ```
 
-**Fix `container` label**
-```
+**Fix `container` label**:
+```sh
 Find: container=~?\\"(compactor|distributor|index-gateway|ingester|querier|query-frontend|query-scheduler|ruler)\\"
 Replace: container=~\"(loki|$1)\"
+```
+And the following:
+```sh
+Find: (kube_deployment_created|kube_pod_container_info)
+Replace: loki_build_info
 ```
 
 ## Deployment
