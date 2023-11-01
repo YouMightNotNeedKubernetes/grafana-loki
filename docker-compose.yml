@@ -49,9 +49,6 @@ services:
     command: 
       - -config.expand-env=true
       - -config.file=/etc/loki/loki.yml
-    environment:
-      GRAFANA_LOKI_HTTP_LISTEN_PORT: ${GRAFANA_LOKI_HTTP_LISTEN_PORT:-3100}
-      GRAFANA_LOKI_GRPC_LISTEN_PORT: ${GRAFANA_LOKI_GRPC_LISTEN_PORT:-9096}
     networks:
       - dockerswarm_monitoring
     ports:

@@ -6,8 +6,8 @@
 auth_enabled: true
 
 server:
-  http_listen_port: ${GRAFANA_LOKI_HTTP_LISTEN_PORT}
-  grpc_listen_port: ${GRAFANA_LOKI_GRPC_LISTEN_PORT}
+  http_listen_port: 3100
+  grpc_listen_port: 9096
   http_server_read_timeout: 310s
   http_server_write_timeout: 310s
   grpc_server_max_recv_msg_size: 104857600
