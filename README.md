@@ -71,10 +71,15 @@ Replace: job=~\"$namespace/(loki|$1)\"
 Find: container=~?\\"(compactor|distributor|index-gateway|ingester|querier|query-frontend|query-scheduler|ruler)\\"
 Replace: container=~\"(loki|$1)\"
 ```
-And the following:
+As well as following:
 ```sh
 Find: (kube_deployment_created|kube_pod_container_info)
 Replace: loki_build_info
+```
+And the following:
+```sh
+Find: level=\\"\$level\\"
+Replace: level=~"$level"
 ```
 
 ## Deployment
