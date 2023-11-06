@@ -36,7 +36,6 @@ networks:
 
 volumes:
   loki:
-    external: true
 
 configs:
   loki.yml:
