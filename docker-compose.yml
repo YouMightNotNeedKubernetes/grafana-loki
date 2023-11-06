@@ -50,9 +50,6 @@ x-grafana-loki: &x-grafana-loki
   image: grafana/loki:${GRAFANA_LOKI_VERSION:-2.9.2}
   networks:
     - grafana_loki
-  # ports:
-  #   - ${GRAFANA_LOKI_HTTP_LISTEN_PORT:-3100}:3100 # http_listen_port
-  #   - ${GRAFANA_LOKI_GRPC_LISTEN_PORT:-9096}:9096 # grpc_listen_port
   configs:
     - source: loki.yml
       target: /etc/loki/loki.yml
