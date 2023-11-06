@@ -15,8 +15,8 @@ server:
   grpc_server_max_send_msg_size: 104857600
 
 common:
+  compactor_address: http://write:3100
   path_prefix: /loki
-  instance_addr: loki-{{.Task.Slot}}
   replication_factor: 3
   ring:
     kvstore:
