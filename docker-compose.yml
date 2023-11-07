@@ -53,6 +53,7 @@ services:
       - dockerswarm_monitoring
     ports:
       - ${GRAFANA_LOKI_HTTP_LISTEN_PORT:-3100}:3100 # http_listen_port
+      - ${GRAFANA_LOKI_GRPC_LISTEN_PORT:-9195}:9095 # grpc_listen_port
     volumes:
       - loki:/loki
     configs:
