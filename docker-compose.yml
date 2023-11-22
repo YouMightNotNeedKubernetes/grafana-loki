@@ -7,8 +7,11 @@ x-deploy: &x-deploy-default
     preferences:
       - spread: node.labels.grafana-loki
   labels:
+    # Prometheus
     io.prometheus.enabled: "true"
     io.prometheus.scrape_port: "3100"
+    # Promtail
+    io.promtail.enabled: "true"
   update_config:
     parallelism: 1
     delay: 30s
